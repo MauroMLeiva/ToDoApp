@@ -30,5 +30,13 @@ export const theme = createTheme({
             default: '#e8e8e8',
             paper: '#e2e2e2',
         },
+        labels: {
+            teal: '#638889',
+            brown: '#9B4444',
+            yellow: '#FFB534',
+            grey: '#A9A9A9',
+            green: '#CDC733',
+            pink: '#FFC6AC',
+        },
     },
 });

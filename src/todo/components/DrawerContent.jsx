@@ -2,12 +2,12 @@ import { useState } from 'react';
 import {
     Add,
     Assignment,
+    AssignmentTurnedIn,
     Delete,
     ExpandLess,
     ExpandMore,
     Label,
-    Logout,
-    PriorityHigh,
+    PendingActions,
 } from '@mui/icons-material';
 import {
     Collapse,
@@ -45,9 +45,16 @@ export const DrawerContent = () => {
 
             <ListItemButton>
                 <ListItemIcon>
-                    <PriorityHigh />
+                    <PendingActions />
                 </ListItemIcon>
-                <ListItemText>Important</ListItemText>
+                <ListItemText>Pending</ListItemText>
+            </ListItemButton>
+
+            <ListItemButton>
+                <ListItemIcon>
+                    <AssignmentTurnedIn />
+                </ListItemIcon>
+                <ListItemText>Done</ListItemText>
             </ListItemButton>
 
             <ListItemButton>
@@ -67,6 +74,13 @@ export const DrawerContent = () => {
 
             <Collapse in={open} timeout='auto' unmountOnExit>
                 <List component='div' disablePadding>
+                    <ListItemButton sx={{ pl: 4 }}>
+                        <ListItemIcon>
+                            <Add />
+                        </ListItemIcon>
+                        <ListItemText primary='New label' />
+                    </ListItemButton>
+
                     {/* DYNAMICALLY RENDER LIST WITH USER CREATED LABELS */}
 
                     <ListItemButton sx={{ pl: 4 }}>

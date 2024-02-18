@@ -1,17 +1,19 @@
+import { Delete, Done, Edit } from '@mui/icons-material';
 import { Masonry } from '@mui/lab';
 import {
     Button,
     Card,
     CardActions,
     CardContent,
-    Grid,
     Typography,
 } from '@mui/material';
 
 export const TodoListView = () => {
     return (
         <Masonry columns={{ xs: 1, columns: 2, columns3: 3 }} spacing={3}>
-            <Card>
+            {/* DYNAMICALLY RENDER CARDS WITH USERS TODOS */}
+
+            <Card /* sx={{ backgroundColor: 'labels.green' }} */>
                 <CardContent>
                     <Typography sx={{ mb: 2 }}>Title</Typography>
                     <Typography>
@@ -21,9 +23,21 @@ export const TodoListView = () => {
                         voluptatem harum fugiat delectus. Sapiente, nostrum!
                     </Typography>
                 </CardContent>
-                <CardActions>
-                    <Button>Edit</Button>
-                    <Button>Check</Button>
+                <CardActions sx={{ justifyContent: 'space-evenly' }}>
+                    <Button sx={{ color: 'black' }}>
+                        <Edit sx={{ mr: 1 }} />
+                        Edit
+                    </Button>
+
+                    <Button sx={{ color: 'black' }}>
+                        <Done sx={{ mr: 1 }} />
+                        Done
+                    </Button>
+
+                    <Button sx={{ color: 'black' }}>
+                        <Delete sx={{ mr: 1 }} />
+                        Archive
+                    </Button>
                 </CardActions>
             </Card>
 
@@ -41,9 +55,21 @@ export const TodoListView = () => {
                         exercitationem perferendis accusamus asperiores illo at!
                     </Typography>
                 </CardContent>
-                <CardActions>
-                    <Button>Edit</Button>
-                    <Button>Check</Button>
+                <CardActions sx={{ justifyContent: 'space-evenly' }}>
+                    <Button sx={{ color: 'black' }}>
+                        <Edit sx={{ mr: 1 }} />
+                        Edit
+                    </Button>
+
+                    <Button sx={{ color: 'black' }}>
+                        <Done sx={{ mr: 1 }} />
+                        Done
+                    </Button>
+
+                    <Button sx={{ color: 'black' }}>
+                        <Delete sx={{ mr: 1 }} />
+                        Archive
+                    </Button>
                 </CardActions>
             </Card>
 
@@ -57,9 +83,21 @@ export const TodoListView = () => {
                         voluptatem harum fugiat delectus. Sapiente, nostrum!
                     </Typography>
                 </CardContent>
-                <CardActions>
-                    <Button>Edit</Button>
-                    <Button>Check</Button>
+                <CardActions sx={{ justifyContent: 'space-evenly' }}>
+                    <Button sx={{ color: 'black' }}>
+                        <Edit sx={{ mr: 1 }} />
+                        Edit
+                    </Button>
+
+                    <Button sx={{ color: 'black' }}>
+                        <Done sx={{ mr: 1 }} />
+                        Check
+                    </Button>
+
+                    <Button sx={{ color: 'black' }}>
+                        <Delete sx={{ mr: 1 }} />
+                        Archive
+                    </Button>
                 </CardActions>
             </Card>
 
@@ -77,9 +115,21 @@ export const TodoListView = () => {
                         eum aliquam laboriosam dicta magnam reprehenderit.
                     </Typography>
                 </CardContent>
-                <CardActions>
-                    <Button>Edit</Button>
-                    <Button>Check</Button>
+                <CardActions sx={{ justifyContent: 'space-evenly' }}>
+                    <Button sx={{ color: 'black' }}>
+                        <Edit sx={{ mr: 1 }} />
+                        Edit
+                    </Button>
+
+                    <Button sx={{ color: 'black' }}>
+                        <Done sx={{ mr: 1 }} />
+                        Check
+                    </Button>
+
+                    <Button sx={{ color: 'black' }}>
+                        <Delete sx={{ mr: 1 }} />
+                        Archive
+                    </Button>
                 </CardActions>
             </Card>
         </Masonry>
