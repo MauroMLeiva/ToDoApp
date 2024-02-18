@@ -1,5 +1,5 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
-import { TodoPage } from '../todo/TodoPage';
+import { TodoPage } from '../todo/pages/TodoPage';
 
 export const TodoRoutes = () => {
     return (

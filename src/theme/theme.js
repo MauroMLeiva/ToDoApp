@@ -1,0 +1,34 @@
+import { createTheme } from '@mui/material';
+
+export const theme = createTheme({
+    breakpoints: {
+        values: {
+            xs: 0,
+            sm: 600,
+            columns: 750,
+            md: 900,
+            columns3: 1050,
+            lg: 1200,
+            xl: 1536,
+        },
+    },
+    palette: {
+        mode: 'light',
+        primary: {
+            main: '#e65100',
+        },
+        secondary: {
+            main: '#b71c1c',
+        },
+        error: {
+            main: '#ff6f00',
+        },
+        warning: {
+            main: '#fdd835',
+        },
+        background: {
+            default: '#e8e8e8',
+            paper: '#e2e2e2',
+        },
+    },
+});
