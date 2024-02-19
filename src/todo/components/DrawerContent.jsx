@@ -19,6 +19,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { setFilter } from '../../store/taskSlice';
 import { DrawerLabelItem } from './DrawerLabelItem';
+import { startNewTask } from '../../store/taskThunks';
 
 export const DrawerContent = () => {
     const [open, setOpen] = useState(true);
@@ -29,13 +30,20 @@ export const DrawerContent = () => {
         setOpen(!open);
     };
 
+    const handleStartTask = () => {
+        dispatch(startNewTask());
+    };
+
     const handleSetFilter = (filter) => {
         dispatch(setFilter(filter));
     };
 
     return (
         <List sx={{ height: '100vh' }}>
-            <ListItemButton sx={{ marginTop: '20px' }}>
+            <ListItemButton
+                sx={{ marginTop: '20px' }}
+                onClick={handleStartTask}
+            >
                 <ListItemIcon>
                     <Add />
                 </ListItemIcon>

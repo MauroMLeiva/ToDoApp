@@ -9,9 +9,9 @@ import {
     Typography,
 } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-// import { startCreatingUserWithEmailPassword } from '../../store/auth';
 import { useForm } from '../../hooks/useForm';
 import { AuthLayout } from '../AuthLayout';
+import { startCreatingUserWithEmailPassword } from '../../store/authThunks';
 
 const formData = {
     email: '',
@@ -56,7 +56,7 @@ export const RegisterPage = () => {
 
         if (!isFormValid) return;
 
-        // dispatch(startCreatingUserWithEmailPassword(formState));
+        dispatch(startCreatingUserWithEmailPassword(formState));
     };
 
     return (

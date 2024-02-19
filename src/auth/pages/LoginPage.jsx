@@ -11,12 +11,12 @@ import {
 } from '@mui/material';
 import { Google } from '@mui/icons-material';
 
-// import {
-//     startGoogleSignIn,
-//     startLoginwithEmailPassword,
-// } from '../../store/auth';
 import { useForm } from '../../hooks/useForm';
 import { AuthLayout } from '../AuthLayout';
+import {
+    startGoogleSignIn,
+    startLoginwithEmailPassword,
+} from '../../store/authThunks';
 
 const formData = {
     email: '',
@@ -34,12 +34,12 @@ export const LoginPage = () => {
     const onSubmit = (event) => {
         event.preventDefault();
 
-        // dispatch(startLoginwithEmailPassword({ email, password }));
+        dispatch(startLoginwithEmailPassword({ email, password }));
     };
 
     const onGoogleSignIn = (event) => {
         event.preventDefault();
-        // dispatch(startGoogleSignIn());
+        dispatch(startGoogleSignIn());
     };
 
     return (

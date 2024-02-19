@@ -4,33 +4,12 @@ export const taskSlice = createSlice({
     name: 'task',
 
     initialState: {
-        tasks: [
-            {
-                title: 'hola1',
-                body: 'Body of the task item',
-                id: 1,
-                color: '',
-                filter: ['all', 'pending'],
-            },
-            {
-                title: 'hola2',
-                body: 'Body of the task item',
-                id: 2,
-                color: 'teal',
-                filter: ['all', 'done'],
-            },
-            {
-                title: 'hola3',
-                body: 'Lorem ipsum y qcyo cuanto mas',
-                id: 3,
-                color: 'green',
-                filter: ['all', 'done', 'archived'],
-            },
-        ],
+        tasks: [],
         filter: 'pending', // all, pending, done, archived
         editing: -1,
         isSaving: false,
-        labels: ['urgent', 'work', 'groceries'],
+        labels: [],
+        messageSaved: '',
     },
 
     reducers: {
@@ -38,11 +17,18 @@ export const taskSlice = createSlice({
             state.tasks.push(action.payload);
             state.isSaving = true;
         },
+        setTasks: (state, action) => {
+            state.tasks = action.payload;
+        },
         setEditing: (state, action) => {
             state.editing = action.payload;
+            state.messageSaved = '';
         },
-        setEditingEnd: (state, action) => {
+        setEditingEnd: (state) => {
             state.editing = -1;
+        },
+        updateTask: (state, action) => {
+            state.isSaving = false;
             state.tasks = state.tasks.map((task) => {
                 if (task.id === action.payload.id) {
                     return action.payload;
@@ -50,12 +36,35 @@ export const taskSlice = createSlice({
 
                 return task;
             });
+
+            state.messageSaved = `Note updated correctly`;
         },
         setFilter: (state, action) => {
             state.filter = action.payload;
         },
+        clearTasksOnLogout: (state) => {
+            state.isSaving = false;
+            state.editing = -1;
+            state.tasks = [];
+        },
+        setSaving: (state) => {
+            state.isSaving = true;
+            state.messageSaved = '';
+        },
+        savingNewTask: (state) => {
+            state.isSaving = true;
+        },
     },
 });
 
-export const { addNewTask, setEditing, setEditingEnd, setFilter } =
-    taskSlice.actions;
+export const {
+    addNewTask,
+    setEditing,
+    setEditingEnd,
+    setFilter,
+    setTasks,
+    clearTasksOnLogout,
+    setSaving,
+    savingNewTask,
+    updateTask,
+} = taskSlice.actions;

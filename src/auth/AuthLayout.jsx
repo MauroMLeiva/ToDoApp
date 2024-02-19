@@ -9,7 +9,7 @@ export const AuthLayout = ({ children, title = '' }) => {
             alignItems='center'
             justifyContent='center'
             sx={{
-                minHeight: '100vh',
+                minHeight: '100dvh',
                 padding: 4,
             }}
         >
@@ -18,14 +18,13 @@ export const AuthLayout = ({ children, title = '' }) => {
                 alignItems='center'
                 justifyContent='center'
                 item
-                className='box-shadow'
                 xs={3}
                 sx={{
                     backgroundColor: 'background.paper',
                     padding: 3,
                     borderRadius: 2,
                     width: { sm: 450 },
-                    mb: 2,
+                    boxShadow: '0px 0px 10px 2px black',
                 }}
             >
                 <Typography

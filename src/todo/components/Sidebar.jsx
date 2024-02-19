@@ -8,14 +8,17 @@ import Typography from '@mui/material/Typography';
 import { useState } from 'react';
 import { Button } from '@mui/material';
 import { DrawerContent } from './DrawerContent';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { startLogout } from '../../store/authThunks';
 
 const drawerWidth = 240;
 
 export const Sidebar = () => {
     const [mobileOpen, setMobileOpen] = useState(false);
     const [isClosing, setIsClosing] = useState(false);
+    const dispatch = useDispatch();
 
+    const { displayName } = useSelector((state) => state.auth);
     const { filter } = useSelector((state) => state.task);
 
     const handleDrawerClose = () => {
@@ -31,6 +34,10 @@ export const Sidebar = () => {
         if (!isClosing) {
             setMobileOpen(!mobileOpen);
         }
+    };
+
+    const handleLogout = () => {
+        dispatch(startLogout());
     };
 
     return (
@@ -60,7 +67,7 @@ export const Sidebar = () => {
                             fontSize: { xs: '18px', sm: '32px' },
                         }}
                     >
-                        User's {filter} Todos
+                        {displayName}'s {filter} Todos
                     </Typography>
 
                     <Button
@@ -68,6 +75,7 @@ export const Sidebar = () => {
                             fontSize: { xs: '14px', sm: '16px' },
                         }}
                         color='inherit'
+                        onClick={handleLogout}
                     >
                         Logout
                     </Button>

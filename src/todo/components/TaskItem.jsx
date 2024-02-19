@@ -14,7 +14,8 @@ import {
 } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from '../../hooks/useForm';
-import { setEditing, setEditingEnd } from '../../store/taskSlice';
+import { setEditing } from '../../store/taskSlice';
+import { startSavingTask } from '../../store/taskThunks';
 
 export const TaskItem = ({ item }) => {
     const dispatch = useDispatch();
@@ -27,12 +28,21 @@ export const TaskItem = ({ item }) => {
         dispatch(setEditing(item.id));
     };
 
-    const handleEditEnd = () => {
-        dispatch(setEditingEnd(formState));
+    const handleSaveTask = () => {
+        dispatch(startSavingTask(formState));
     };
 
     return (
-        <Card sx={{ backgroundColor: `labels.${color}` }}>
+        <Card
+            sx={{
+                backgroundColor: `labels.${color}`,
+                boxShadow:
+                    editing == item.id
+                        ? '0px 0px 10px 2px #e65100'
+                        : '0px 0px 10px 2px black',
+                // border: editing == item.id ? '3px solid orange' : '',
+            }}
+        >
             <CardContent>
                 {editing == item.id ? (
                     <>
@@ -71,6 +81,7 @@ export const TaskItem = ({ item }) => {
                             placeholder='Task to complete...'
                             variant='plain'
                             multiline
+                            rows={5}
                             sx={{
                                 display: 'flex',
                                 '--Input-radius': '0px',
@@ -182,7 +193,10 @@ export const TaskItem = ({ item }) => {
                             </Select>
                         </FormControl>
 
-                        <Button onClick={handleEditEnd} sx={{ color: 'black' }}>
+                        <Button
+                            onClick={handleSaveTask}
+                            sx={{ color: 'black' }}
+                        >
                             <Save sx={{ mr: '1px' }} />
                             Save
                         </Button>
