@@ -1,8 +1,9 @@
-import { collection, doc, setDoc } from 'firebase/firestore/lite';
+import { collection, deleteDoc, doc, setDoc } from 'firebase/firestore/lite';
 import { FirebaseDB } from '../firebase/config';
 import { loadTasks } from '../helpers/loadTasks';
 import {
     addNewTask,
+    deleteTaskById,
     savingNewTask,
     setEditing,
     setEditingEnd,
@@ -58,5 +59,16 @@ export const startSavingTask = (task) => {
 
         dispatch(updateTask(task));
         dispatch(setEditingEnd());
+    };
+};
+
+export const startDeletingTask = (id) => {
+    return async (dispatch, getState) => {
+        const { uid } = getState().auth;
+
+        const docRef = doc(FirebaseDB, `${uid}/todo/tasks/${id}`);
+        await deleteDoc(docRef);
+
+        dispatch(deleteTaskById(id));
     };
 };

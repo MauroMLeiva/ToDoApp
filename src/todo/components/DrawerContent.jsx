@@ -85,13 +85,6 @@ export const DrawerContent = ({ close, setMobileOpen, setIsClosing }) => {
                 <ListItemText>Done</ListItemText>
             </ListItemButton>
 
-            <ListItemButton onClick={() => handleSetFilter('archived')}>
-                <ListItemIcon>
-                    <Delete />
-                </ListItemIcon>
-                <ListItemText>Archived</ListItemText>
-            </ListItemButton>
-
             <Divider sx={{ margin: '20px' }} />
 
             <ListItemButton onClick={handleClick}>

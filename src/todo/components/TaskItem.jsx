@@ -15,7 +15,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from '../../hooks/useForm';
 import { setEditing } from '../../store/taskSlice';
-import { startSavingTask } from '../../store/taskThunks';
+import { startDeletingTask, startSavingTask } from '../../store/taskThunks';
 
 export const TaskItem = ({ item }) => {
     const dispatch = useDispatch();
@@ -26,6 +26,10 @@ export const TaskItem = ({ item }) => {
 
     const handleEdit = () => {
         dispatch(setEditing(item.id));
+    };
+
+    const handleDelete = () => {
+        dispatch(startDeletingTask(item.id));
     };
 
     const handleSaveTask = () => {
@@ -213,9 +217,9 @@ export const TaskItem = ({ item }) => {
                             Done
                         </Button>
 
-                        <Button sx={{ color: 'black' }}>
+                        <Button onClick={handleDelete} sx={{ color: 'black' }}>
                             <Delete sx={{ mr: '1px' }} />
-                            Archive
+                            Delete
                         </Button>
                     </>
                 )}

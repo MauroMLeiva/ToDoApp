@@ -54,6 +54,12 @@ export const taskSlice = createSlice({
         savingNewTask: (state) => {
             state.isSaving = true;
         },
+        deleteTaskById: (state, action) => {
+            state.active = null;
+            state.tasks = state.tasks.filter(
+                (task) => task.id !== action.payload
+            );
+        },
     },
 });
 
@@ -67,4 +73,5 @@ export const {
     setSaving,
     savingNewTask,
     updateTask,
+    deleteTaskById,
 } = taskSlice.actions;
