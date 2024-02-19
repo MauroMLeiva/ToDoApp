@@ -50,6 +50,7 @@ export const taskSlice = createSlice({
             state.isSaving = false;
             state.editing = -1;
             state.tasks = [];
+            state.filter = 'pending';
         },
         setSaving: (state) => {
             state.isSaving = true;
