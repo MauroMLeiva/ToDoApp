@@ -5,7 +5,7 @@ export const taskSlice = createSlice({
 
     initialState: {
         tasks: [],
-        filter: 'pending', // all, pending, done, archived
+        filter: 'pending', // all, pending, done, archived, {labels}
         editing: -1,
         isSaving: false,
         labels: [],
@@ -14,7 +14,7 @@ export const taskSlice = createSlice({
 
     reducers: {
         addNewTask: (state, action) => {
-            state.tasks.push(action.payload);
+            state.tasks.unshift(action.payload);
             state.isSaving = true;
         },
         setTasks: (state, action) => {

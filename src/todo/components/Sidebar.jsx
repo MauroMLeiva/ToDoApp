@@ -104,7 +104,13 @@ export const Sidebar = () => {
                     }}
                 >
                     <Toolbar />
-                    {<DrawerContent />}
+                    {
+                        <DrawerContent
+                            close={true}
+                            setIsClosing={setIsClosing}
+                            setMobileOpen={setMobileOpen}
+                        />
+                    }
                 </Drawer>
                 <Drawer
                     variant='permanent'
@@ -118,7 +124,13 @@ export const Sidebar = () => {
                     open
                 >
                     <Toolbar />
-                    {<DrawerContent />}
+                    {
+                        <DrawerContent
+                            close={false}
+                            setIsClosing={setIsClosing}
+                            setMobileOpen={setMobileOpen}
+                        />
+                    }
                 </Drawer>
             </Box>
         </Box>

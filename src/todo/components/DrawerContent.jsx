@@ -21,7 +21,7 @@ import { setFilter } from '../../store/taskSlice';
 import { DrawerLabelItem } from './DrawerLabelItem';
 import { startNewTask } from '../../store/taskThunks';
 
-export const DrawerContent = () => {
+export const DrawerContent = ({ close, setMobileOpen, setIsClosing }) => {
     const [open, setOpen] = useState(true);
     const { labels } = useSelector((state) => state.task);
     const dispatch = useDispatch();
@@ -30,7 +30,19 @@ export const DrawerContent = () => {
         setOpen(!open);
     };
 
+    const handleAddLabel = () => {
+        if (close) {
+            setIsClosing(true);
+            setMobileOpen(false);
+        }
+    };
+
     const handleStartTask = () => {
+        if (close) {
+            setIsClosing(true);
+            setMobileOpen(false);
+        }
+
         dispatch(startNewTask());
     };
 
@@ -90,7 +102,7 @@ export const DrawerContent = () => {
 
             <Collapse in={open} timeout='auto' unmountOnExit>
                 <List component='div' disablePadding>
-                    <ListItemButton sx={{ pl: 4 }}>
+                    <ListItemButton sx={{ pl: 4 }} onClick={handleAddLabel}>
                         <ListItemIcon>
                             <Add />
                         </ListItemIcon>
