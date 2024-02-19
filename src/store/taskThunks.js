@@ -9,6 +9,7 @@ import {
     savingNewTask,
     setEditing,
     setEditingEnd,
+    setFilter,
     setLabels,
     setSaving,
     setTasks,
@@ -19,6 +20,7 @@ import { loadLabels } from '../helpers/loadLabels';
 export const startNewTask = () => {
     return async (dispatch, getState) => {
         dispatch(savingNewTask());
+        dispatch(setFilter('all'));
 
         const { uid } = getState().auth;
 
