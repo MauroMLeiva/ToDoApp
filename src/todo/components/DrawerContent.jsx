@@ -6,7 +6,6 @@ import {
     Delete,
     ExpandLess,
     ExpandMore,
-    Label,
     PendingActions,
 } from '@mui/icons-material';
 import {
@@ -17,12 +16,21 @@ import {
     ListItemIcon,
     ListItemText,
 } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
+import { setFilter } from '../../store/taskSlice';
+import { DrawerLabelItem } from './DrawerLabelItem';
 
 export const DrawerContent = () => {
     const [open, setOpen] = useState(true);
+    const { labels } = useSelector((state) => state.task);
+    const dispatch = useDispatch();
 
     const handleClick = () => {
         setOpen(!open);
+    };
+
+    const handleSetFilter = (filter) => {
+        dispatch(setFilter(filter));
     };
 
     return (
@@ -36,28 +44,28 @@ export const DrawerContent = () => {
 
             <Divider sx={{ margin: '20px' }} />
 
-            <ListItemButton>
+            <ListItemButton onClick={() => handleSetFilter('all')}>
                 <ListItemIcon>
                     <Assignment />
                 </ListItemIcon>
                 <ListItemText>All tasks</ListItemText>
             </ListItemButton>
 
-            <ListItemButton>
+            <ListItemButton onClick={() => handleSetFilter('pending')}>
                 <ListItemIcon>
                     <PendingActions />
                 </ListItemIcon>
                 <ListItemText>Pending</ListItemText>
             </ListItemButton>
 
-            <ListItemButton>
+            <ListItemButton onClick={() => handleSetFilter('done')}>
                 <ListItemIcon>
                     <AssignmentTurnedIn />
                 </ListItemIcon>
                 <ListItemText>Done</ListItemText>
             </ListItemButton>
 
-            <ListItemButton>
+            <ListItemButton onClick={() => handleSetFilter('archived')}>
                 <ListItemIcon>
                     <Delete />
                 </ListItemIcon>
@@ -82,27 +90,13 @@ export const DrawerContent = () => {
                     </ListItemButton>
 
                     {/* DYNAMICALLY RENDER LIST WITH USER CREATED LABELS */}
-
-                    <ListItemButton sx={{ pl: 4 }}>
-                        <ListItemIcon>
-                            <Label style={{ color: 'blue' }} />
-                        </ListItemIcon>
-                        <ListItemText primary='Label 1' />
-                    </ListItemButton>
-
-                    <ListItemButton sx={{ pl: 4 }}>
-                        <ListItemIcon>
-                            <Label />
-                        </ListItemIcon>
-                        <ListItemText primary='Label 2' />
-                    </ListItemButton>
-
-                    <ListItemButton sx={{ pl: 4 }}>
-                        <ListItemIcon>
-                            <Label />
-                        </ListItemIcon>
-                        <ListItemText primary='Label 3' />
-                    </ListItemButton>
+                    {labels.map((label) => (
+                        <DrawerLabelItem
+                            key={label}
+                            label={label}
+                            click={handleSetFilter}
+                        />
+                    ))}
                 </List>
             </Collapse>
         </List>

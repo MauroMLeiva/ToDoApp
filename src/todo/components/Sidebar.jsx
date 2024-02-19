@@ -8,12 +8,15 @@ import Typography from '@mui/material/Typography';
 import { useState } from 'react';
 import { Button } from '@mui/material';
 import { DrawerContent } from './DrawerContent';
+import { useSelector } from 'react-redux';
 
 const drawerWidth = 240;
 
 export const Sidebar = () => {
     const [mobileOpen, setMobileOpen] = useState(false);
     const [isClosing, setIsClosing] = useState(false);
+
+    const { filter } = useSelector((state) => state.task);
 
     const handleDrawerClose = () => {
         setIsClosing(true);
@@ -57,7 +60,7 @@ export const Sidebar = () => {
                             fontSize: { xs: '18px', sm: '32px' },
                         }}
                     >
-                        User's Todos
+                        User's {filter} Todos
                     </Typography>
 
                     <Button
