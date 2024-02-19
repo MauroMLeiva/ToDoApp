@@ -3,7 +3,6 @@ import {
     Add,
     Assignment,
     AssignmentTurnedIn,
-    Delete,
     ExpandLess,
     ExpandMore,
     PendingActions,
@@ -20,14 +19,20 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setFilter } from '../../store/taskSlice';
 import { DrawerLabelItem } from './DrawerLabelItem';
 import { startNewTask } from '../../store/taskThunks';
+import { LabelDialog } from './LabelDialog';
 
 export const DrawerContent = ({ close, setMobileOpen, setIsClosing }) => {
     const [open, setOpen] = useState(true);
+    const [dialogOpen, setDialogOpen] = useState(false);
     const { labels } = useSelector((state) => state.task);
     const dispatch = useDispatch();
 
     const handleClick = () => {
         setOpen(!open);
+    };
+
+    const handleAddLabelDialog = () => {
+        setDialogOpen(true);
     };
 
     const handleAddLabel = () => {
@@ -95,17 +100,22 @@ export const DrawerContent = ({ close, setMobileOpen, setIsClosing }) => {
 
             <Collapse in={open} timeout='auto' unmountOnExit>
                 <List component='div' disablePadding>
-                    <ListItemButton sx={{ pl: 4 }} onClick={handleAddLabel}>
+                    <ListItemButton onClick={handleAddLabelDialog}>
                         <ListItemIcon>
                             <Add />
                         </ListItemIcon>
                         <ListItemText primary='New label' />
                     </ListItemButton>
 
+                    <LabelDialog
+                        dialogOpen={dialogOpen}
+                        setDialogOpen={setDialogOpen}
+                    />
+
                     {/* DYNAMICALLY RENDER LIST WITH USER CREATED LABELS */}
                     {labels.map((label) => (
                         <DrawerLabelItem
-                            key={label}
+                            key={label.id}
                             label={label}
                             click={handleSetFilter}
                         />

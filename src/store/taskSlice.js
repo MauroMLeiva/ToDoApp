@@ -17,8 +17,14 @@ export const taskSlice = createSlice({
             state.tasks.unshift(action.payload);
             state.isSaving = true;
         },
+        addNewLabel: (state, action) => {
+            state.labels.push(action.payload);
+        },
         setTasks: (state, action) => {
             state.tasks = action.payload;
+        },
+        setLabels: (state, action) => {
+            state.labels = action.payload;
         },
         setEditing: (state, action) => {
             state.editing = action.payload;
@@ -36,8 +42,6 @@ export const taskSlice = createSlice({
 
                 return task;
             });
-
-            state.messageSaved = `Note updated correctly`;
         },
         setFilter: (state, action) => {
             state.filter = action.payload;
@@ -60,6 +64,23 @@ export const taskSlice = createSlice({
                 (task) => task.id !== action.payload
             );
         },
+        deleteLabelById: (state, action) => {
+            state.active = null;
+            let content = null;
+            state.labels.forEach((label) => {
+                if (label.id == action.payload) {
+                    content = label.label;
+                }
+            });
+
+            state.labels = state.labels.filter(
+                (label) => label.id !== action.payload
+            );
+
+            if (state.filter == content) {
+                state.filter = 'all';
+            }
+        },
     },
 });
 
@@ -74,4 +95,7 @@ export const {
     savingNewTask,
     updateTask,
     deleteTaskById,
+    addNewLabel,
+    setLabels,
+    deleteLabelById,
 } = taskSlice.actions;

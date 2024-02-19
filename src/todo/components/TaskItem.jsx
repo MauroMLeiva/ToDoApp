@@ -19,7 +19,7 @@ import { startDeletingTask, startSavingTask } from '../../store/taskThunks';
 
 export const TaskItem = ({ item }) => {
     const dispatch = useDispatch();
-    const { editing, labels: allLabels } = useSelector((state) => state.task);
+    const { editing, labels } = useSelector((state) => state.task);
 
     const { title, body, color, filter, formState, onInputChange } =
         useForm(item);
@@ -44,7 +44,6 @@ export const TaskItem = ({ item }) => {
                     editing == item.id
                         ? '0px 0px 10px 2px #e65100'
                         : '0px 0px 10px 2px black',
-                // border: editing == item.id ? '3px solid orange' : '',
             }}
         >
             <CardContent>
@@ -189,9 +188,12 @@ export const TaskItem = ({ item }) => {
                                 onChange={onInputChange}
                                 input={<OutlinedInput label='Name' />}
                             >
-                                {allLabels.map((label) => (
-                                    <MenuItem key={label} value={label}>
-                                        {label}
+                                {labels.map((label) => (
+                                    <MenuItem
+                                        key={label.id}
+                                        value={label.label}
+                                    >
+                                        {label.label}
                                     </MenuItem>
                                 ))}
                             </Select>
