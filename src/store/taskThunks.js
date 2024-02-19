@@ -116,3 +116,41 @@ export const startDeletingLabel = (id) => {
         dispatch(deleteLabelById(id));
     };
 };
+
+export const startSetDone = (task) => {
+    return async (dispatch, getState) => {
+        dispatch(setSaving());
+
+        const { uid } = getState().auth;
+        const newFilter = task.filter.filter((tag) => tag !== 'pending');
+        newFilter.push('done');
+
+        const taskToFireStore = { ...task, filter: newFilter };
+        const taskUpdate = { ...task, filter: newFilter };
+        delete taskToFireStore.id;
+
+        const docRef = doc(FirebaseDB, `${uid}/todo/tasks/${task.id}`);
+        await setDoc(docRef, taskToFireStore, { merge: true });
+
+        dispatch(updateTask(taskUpdate));
+    };
+};
+
+export const startSetUndone = (task) => {
+    return async (dispatch, getState) => {
+        dispatch(setSaving());
+
+        const { uid } = getState().auth;
+        const newFilter = task.filter.filter((tag) => tag !== 'done');
+        newFilter.push('pending');
+
+        const taskToFireStore = { ...task, filter: newFilter };
+        const taskUpdate = { ...task, filter: newFilter };
+        delete taskToFireStore.id;
+
+        const docRef = doc(FirebaseDB, `${uid}/todo/tasks/${task.id}`);
+        await setDoc(docRef, taskToFireStore, { merge: true });
+
+        dispatch(updateTask(taskUpdate));
+    };
+};

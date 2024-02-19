@@ -1,4 +1,4 @@
-import { Delete, Done, Edit, Save } from '@mui/icons-material';
+import { Close, Delete, Done, Edit, Save } from '@mui/icons-material';
 import {
     Button,
     Card,
@@ -15,7 +15,12 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from '../../hooks/useForm';
 import { setEditing } from '../../store/taskSlice';
-import { startDeletingTask, startSavingTask } from '../../store/taskThunks';
+import {
+    startDeletingTask,
+    startSavingTask,
+    startSetDone,
+    startSetUndone,
+} from '../../store/taskThunks';
 
 export const TaskItem = ({ item }) => {
     const dispatch = useDispatch();
@@ -34,6 +39,14 @@ export const TaskItem = ({ item }) => {
 
     const handleSaveTask = () => {
         dispatch(startSavingTask(formState));
+    };
+
+    const handleCheck = () => {
+        dispatch(startSetDone(formState));
+    };
+
+    const handleUncheck = () => {
+        dispatch(startSetUndone(formState));
     };
 
     return (
@@ -214,10 +227,23 @@ export const TaskItem = ({ item }) => {
                             Edit
                         </Button>
 
-                        <Button sx={{ color: 'black' }}>
-                            <Done sx={{ mr: '1px' }} />
-                            Done
-                        </Button>
+                        {filter.includes('pending') ? (
+                            <Button
+                                onClick={handleCheck}
+                                sx={{ color: 'black' }}
+                            >
+                                <Done sx={{ mr: '1px' }} />
+                                Done
+                            </Button>
+                        ) : (
+                            <Button
+                                onClick={handleUncheck}
+                                sx={{ color: 'black' }}
+                            >
+                                <Close sx={{ mr: '1px' }} />
+                                Undo
+                            </Button>
+                        )}
 
                         <Button onClick={handleDelete} sx={{ color: 'black' }}>
                             <Delete sx={{ mr: '1px' }} />
