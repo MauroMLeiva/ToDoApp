@@ -32,14 +32,12 @@ export const DrawerContent = ({ close, setMobileOpen, setIsClosing }) => {
     };
 
     const handleAddLabelDialog = () => {
-        setDialogOpen(true);
-    };
-
-    const handleAddLabel = () => {
         if (close) {
             setIsClosing(true);
             setMobileOpen(false);
         }
+
+        setDialogOpen(true);
     };
 
     const handleStartTask = () => {
@@ -52,6 +50,11 @@ export const DrawerContent = ({ close, setMobileOpen, setIsClosing }) => {
     };
 
     const handleSetFilter = (filter) => {
+        if (close) {
+            setIsClosing(true);
+            setMobileOpen(false);
+        }
+
         dispatch(setFilter(filter));
     };
 
