@@ -114,6 +114,7 @@ export const startDeletingTask = (id) => {
 
 export const startDeletingLabel = (id) => {
     return async (dispatch, getState) => {
+        dispatch(setSaving());
         const { uid } = getState().auth;
 
         const docRef = doc(FirebaseDB, `${uid}/todo/labels/${id}`);
