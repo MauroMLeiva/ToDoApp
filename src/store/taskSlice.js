@@ -42,6 +42,32 @@ export const taskSlice = createSlice({
 
                 return task;
             });
+
+            state.messageSaved = 'Task saved';
+        },
+        updateTaskDone: (state, action) => {
+            state.isSaving = false;
+            state.tasks = state.tasks.map((task) => {
+                if (task.id === action.payload.id) {
+                    return action.payload;
+                }
+
+                return task;
+            });
+
+            state.messageSaved = 'Task marked as Done';
+        },
+        updateTaskPending: (state, action) => {
+            state.isSaving = false;
+            state.tasks = state.tasks.map((task) => {
+                if (task.id === action.payload.id) {
+                    return action.payload;
+                }
+
+                return task;
+            });
+
+            state.messageSaved = 'Task marked as Pending';
         },
         setFilter: (state, action) => {
             state.filter = action.payload;
@@ -51,6 +77,7 @@ export const taskSlice = createSlice({
             state.editing = -1;
             state.tasks = [];
             state.filter = 'pending';
+            state.messageSaved = '';
         },
         setSaving: (state) => {
             state.isSaving = true;
@@ -64,6 +91,8 @@ export const taskSlice = createSlice({
             state.tasks = state.tasks.filter(
                 (task) => task.id !== action.payload
             );
+
+            state.messageSaved = 'Task deleted';
         },
         deleteLabelById: (state, action) => {
             state.active = null;
@@ -81,6 +110,8 @@ export const taskSlice = createSlice({
             if (state.filter == content) {
                 state.filter = 'all';
             }
+
+            state.messageSaved = 'Label deleted';
         },
     },
 });
@@ -99,4 +130,6 @@ export const {
     addNewLabel,
     setLabels,
     deleteLabelById,
+    updateTaskDone,
+    updateTaskPending,
 } = taskSlice.actions;

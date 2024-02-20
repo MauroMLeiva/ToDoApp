@@ -14,6 +14,8 @@ import {
     setSaving,
     setTasks,
     updateTask,
+    updateTaskDone,
+    updateTaskPending,
 } from './taskSlice';
 import { loadLabels } from '../helpers/loadLabels';
 
@@ -132,7 +134,7 @@ export const startSetDone = (task) => {
         const docRef = doc(FirebaseDB, `${uid}/todo/tasks/${task.id}`);
         await setDoc(docRef, taskToFireStore, { merge: true });
 
-        dispatch(updateTask(taskUpdate));
+        dispatch(updateTaskDone(taskUpdate));
     };
 };
 
@@ -151,6 +153,6 @@ export const startSetUndone = (task) => {
         const docRef = doc(FirebaseDB, `${uid}/todo/tasks/${task.id}`);
         await setDoc(docRef, taskToFireStore, { merge: true });
 
-        dispatch(updateTask(taskUpdate));
+        dispatch(updateTaskPending(taskUpdate));
     };
 };

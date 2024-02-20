@@ -10,12 +10,12 @@ export const CheckingAuth = () => {
             justifyContent='center'
             sx={{
                 minHeight: '100vh',
-                backgroundColor: 'primary.main',
+                backgroundColor: 'background.default',
                 padding: 4,
             }}
         >
             <Grid container direction='row' justifyContent='center'>
-                <CircularProgress color='warning' />
+                <CircularProgress color='primary' />
             </Grid>
         </Grid>
     );

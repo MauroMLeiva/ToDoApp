@@ -129,7 +129,6 @@ export const TaskItem = ({ item }) => {
             <CardActions
                 sx={{
                     justifyContent: 'space-between',
-                    flexDirection: { columns: 'column', md: 'row' },
                     alignItems: 'center',
                 }}
             >
