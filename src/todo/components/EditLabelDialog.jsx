@@ -14,6 +14,10 @@ export const EditLabelDialog = ({ dialogOpen, setDialogOpen, content }) => {
         setDialogOpen(false);
     };
 
+    const handleEdit = () => {
+        console.log('Edited label');
+    };
+
     const handleDelete = () => {
         dispatch(startDeletingLabel(content.id));
     };
@@ -53,7 +57,7 @@ export const EditLabelDialog = ({ dialogOpen, setDialogOpen, content }) => {
             <DialogActions>
                 <Button onClick={handleClose}>Cancel</Button>
                 <Button onClick={handleDelete}>Delete</Button>
-                <Button type='submit'>Save</Button>
+                <Button onClick={handleEdit}>Save</Button>
             </DialogActions>
         </Dialog>
     );

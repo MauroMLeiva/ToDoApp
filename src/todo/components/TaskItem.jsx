@@ -21,6 +21,7 @@ import {
     startSetDone,
     startSetUndone,
 } from '../../store/taskThunks';
+import toast from 'react-hot-toast';
 
 export const TaskItem = ({ item }) => {
     const dispatch = useDispatch();
@@ -38,6 +39,18 @@ export const TaskItem = ({ item }) => {
     };
 
     const handleSaveTask = () => {
+        if (title.trim().length === 0 && body.trim().length === 0) {
+            toast('Task must contain Title or Notes', {
+                style: {
+                    boxShadow: '0px 0px 10px 2px black',
+                    backgroundColor: '#e65100',
+                    color: 'white',
+                    fontWeight: '700',
+                },
+            });
+            return;
+        }
+
         dispatch(startSavingTask(formState));
     };
 
@@ -121,7 +134,9 @@ export const TaskItem = ({ item }) => {
                     </>
                 ) : (
                     <>
-                        <Typography sx={{ mb: 2 }}>{title}</Typography>
+                        <Typography sx={{ mb: 2, fontWeight: 600 }}>
+                            {title}
+                        </Typography>
                         <Typography>{body}</Typography>
                     </>
                 )}

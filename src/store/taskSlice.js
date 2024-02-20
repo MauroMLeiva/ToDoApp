@@ -16,6 +16,7 @@ export const taskSlice = createSlice({
         addNewTask: (state, action) => {
             state.tasks.unshift(action.payload);
             state.isSaving = true;
+            state.messageSaved = 'Task created';
         },
         addNewLabel: (state, action) => {
             state.labels.push(action.payload);
@@ -32,6 +33,7 @@ export const taskSlice = createSlice({
         },
         setEditingEnd: (state) => {
             state.editing = -1;
+            state.messageSaved = '';
         },
         updateTask: (state, action) => {
             state.isSaving = false;
@@ -85,6 +87,7 @@ export const taskSlice = createSlice({
         },
         savingNewTask: (state) => {
             state.isSaving = true;
+            state.messageSaved = '';
         },
         deleteTaskById: (state, action) => {
             state.active = null;

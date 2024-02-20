@@ -45,6 +45,8 @@ export const startNewTask = () => {
 
 export const startNewLabel = (label) => {
     return async (dispatch, getState) => {
+        dispatch(setSaving());
+
         const { uid } = getState().auth;
 
         const newLabel = {
@@ -92,13 +94,15 @@ export const startSavingTask = (task) => {
         const docRef = doc(FirebaseDB, `${uid}/todo/tasks/${task.id}`);
         await setDoc(docRef, taskToFireStore, { merge: true });
 
-        dispatch(updateTask(task));
         dispatch(setEditingEnd());
+        dispatch(updateTask(task));
     };
 };
 
 export const startDeletingTask = (id) => {
     return async (dispatch, getState) => {
+        dispatch(setSaving());
+
         const { uid } = getState().auth;
 
         const docRef = doc(FirebaseDB, `${uid}/todo/tasks/${id}`);
