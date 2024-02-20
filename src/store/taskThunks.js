@@ -22,7 +22,7 @@ import { loadLabels } from '../helpers/loadLabels';
 export const startNewTask = () => {
     return async (dispatch, getState) => {
         dispatch(savingNewTask());
-        dispatch(setFilter('all'));
+        dispatch(setFilter('pending'));
 
         const { uid } = getState().auth;
 

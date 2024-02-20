@@ -137,7 +137,9 @@ export const TaskItem = ({ item }) => {
                         <Typography sx={{ mb: 2, fontWeight: 600 }}>
                             {title}
                         </Typography>
-                        <Typography>{body}</Typography>
+                        <Typography style={{ whiteSpace: 'pre-wrap' }}>
+                            {body}
+                        </Typography>
                     </>
                 )}
             </CardContent>
