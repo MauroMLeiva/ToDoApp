@@ -98,23 +98,29 @@ export const taskSlice = createSlice({
             state.messageSaved = 'Task deleted';
         },
         deleteLabelById: (state, action) => {
-            state.active = null;
-            let content = null;
-            state.labels.forEach((label) => {
-                if (label.id == action.payload) {
-                    content = label.label;
-                }
-            });
-
             state.labels = state.labels.filter(
-                (label) => label.id !== action.payload
+                (label) => label.id !== action.payload.id
             );
 
-            if (state.filter == content) {
+            if (state.filter == action.payload.label) {
                 state.filter = 'all';
             }
 
             state.messageSaved = 'Label deleted';
+        },
+        updateLabelById: (state, action) => {
+            state.isSaving = false;
+            state.labels = state.labels.map((label) => {
+                if (label.id === action.payload.id) {
+                    return action.payload;
+                }
+
+                return label;
+            });
+
+            state.filter = action.payload.label;
+
+            state.messageSaved = 'Label saved';
         },
     },
 });
@@ -135,4 +141,5 @@ export const {
     deleteLabelById,
     updateTaskDone,
     updateTaskPending,
+    updateLabelById,
 } = taskSlice.actions;

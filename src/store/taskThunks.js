@@ -1,4 +1,12 @@
-import { collection, deleteDoc, doc, setDoc } from 'firebase/firestore/lite';
+import {
+    collection,
+    deleteDoc,
+    doc,
+    getDocs,
+    query,
+    setDoc,
+    where,
+} from 'firebase/firestore/lite';
 import { FirebaseDB } from '../firebase/config';
 import { loadTasks } from '../helpers/loadTasks';
 import {
@@ -13,26 +21,34 @@ import {
     setLabels,
     setSaving,
     setTasks,
+    updateLabelById,
     updateTask,
     updateTaskDone,
     updateTaskPending,
 } from './taskSlice';
 import { loadLabels } from '../helpers/loadLabels';
 
-export const startNewTask = () => {
+export const startNewTask = (newFilter) => {
     return async (dispatch, getState) => {
         dispatch(savingNewTask());
-        dispatch(setFilter('pending'));
+        dispatch(setFilter(newFilter));
 
         const { uid } = getState().auth;
 
-        const newTask = {
-            title: '',
-            body: '',
-            color: '',
-            filter: ['all', 'pending'],
-        };
-
+        const newTask =
+            newFilter === 'all' || newFilter === 'pending'
+                ? {
+                      title: '',
+                      body: '',
+                      color: '',
+                      filter: ['all', 'pending'],
+                  }
+                : {
+                      title: '',
+                      body: '',
+                      color: '',
+                      filter: ['all', 'pending', newFilter],
+                  };
         const newDoc = doc(collection(FirebaseDB, `${uid}/todo/tasks`));
         await setDoc(newDoc, newTask);
 
@@ -112,15 +128,71 @@ export const startDeletingTask = (id) => {
     };
 };
 
-export const startDeletingLabel = (id) => {
+export const startDeletingLabel = (label) => {
     return async (dispatch, getState) => {
         dispatch(setSaving());
         const { uid } = getState().auth;
 
-        const docRef = doc(FirebaseDB, `${uid}/todo/labels/${id}`);
+        const docRef = doc(FirebaseDB, `${uid}/todo/labels/${label.id}`);
         await deleteDoc(docRef);
 
-        dispatch(deleteLabelById(id));
+        const q = query(
+            collection(FirebaseDB, `${uid}/todo/tasks`),
+            where('filter', 'array-contains', label.label)
+        );
+        const snap = await getDocs(q);
+        snap.forEach(async (document) => {
+            const newFilter = document
+                .data()
+                .filter.filter((item) => item !== label.label);
+
+            const newDoc = { ...document.data(), filter: newFilter };
+
+            const docRef = doc(FirebaseDB, `${uid}/todo/tasks/${document.id}`);
+
+            await setDoc(docRef, newDoc, { merge: true });
+
+            const updateDoc = { ...newDoc, id: document.id };
+            dispatch(updateTask(updateDoc));
+        });
+
+        dispatch(deleteLabelById(label));
+    };
+};
+export const startUpdatingLabel = (label) => {
+    return async (dispatch, getState) => {
+        dispatch(setSaving());
+        const { uid } = getState().auth;
+
+        const newLabel = { label: label.labelContent };
+
+        const docRef = doc(FirebaseDB, `${uid}/todo/labels/${label.id}`);
+        await setDoc(docRef, newLabel, { merge: true });
+
+        const q = query(
+            collection(FirebaseDB, `${uid}/todo/tasks`),
+            where('filter', 'array-contains', label.old)
+        );
+        const snap = await getDocs(q);
+
+        snap.forEach(async (document) => {
+            const removeOldLabel = document
+                .data()
+                .filter.filter((item) => item !== label.old);
+            const newFilter = [...removeOldLabel, label.labelContent];
+
+            const newDoc = { ...document.data(), filter: newFilter };
+
+            const docRef = doc(FirebaseDB, `${uid}/todo/tasks/${document.id}`);
+
+            await setDoc(docRef, newDoc, { merge: true });
+
+            const updateDoc = { ...newDoc, id: document.id };
+            dispatch(updateTask(updateDoc));
+        });
+
+        const updatedLabel = { ...newLabel, id: label.id };
+        dispatch(updateLabelById(updatedLabel));
     };
 };
 

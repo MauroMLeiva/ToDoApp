@@ -1,4 +1,4 @@
-import { Delete, Label } from '@mui/icons-material';
+import { Edit, Label } from '@mui/icons-material';
 import {
     IconButton,
     ListItem,
@@ -20,7 +20,7 @@ export const DrawerLabelItem = ({ label, click }) => {
         <ListItem
             secondaryAction={
                 <IconButton onClick={handleDialogOpen}>
-                    <Delete />
+                    <Edit />
                 </IconButton>
             }
             disablePadding

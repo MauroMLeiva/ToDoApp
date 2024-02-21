@@ -24,7 +24,7 @@ import { LabelDialog } from './LabelDialog';
 export const DrawerContent = ({ close, setMobileOpen, setIsClosing }) => {
     const [open, setOpen] = useState(true);
     const [dialogOpen, setDialogOpen] = useState(false);
-    const { labels } = useSelector((state) => state.task);
+    const { labels, filter } = useSelector((state) => state.task);
     const dispatch = useDispatch();
 
     const handleClick = () => {
@@ -46,7 +46,9 @@ export const DrawerContent = ({ close, setMobileOpen, setIsClosing }) => {
             setMobileOpen(false);
         }
 
-        dispatch(startNewTask());
+        const newFilter = filter === 'done' ? 'pending' : filter;
+
+        dispatch(startNewTask(newFilter));
     };
 
     const handleSetFilter = (filter) => {
