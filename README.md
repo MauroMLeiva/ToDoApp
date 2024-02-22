@@ -5,3 +5,5 @@ Todo App is an application built with React.js and Material UI, to manage a list
 ### Installation
 
 After cloning the repository, run `yarn` to install neccesary dependencies. You can then run `yarn dev` to run the app locally.
+
+There is also a live version running on https://todomanageapp.netlify.app
