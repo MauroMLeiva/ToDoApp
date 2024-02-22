@@ -18,6 +18,8 @@ export const authSlice = createSlice({
             state.displayName = payload.displayName;
             state.photoURL = payload.photoURL;
             state.errorMessage = null;
+
+            document.title = `${state.displayName}'s todos`;
         },
         logout: (state, { payload }) => {
             state.status = 'not-authenticated';
@@ -26,6 +28,8 @@ export const authSlice = createSlice({
             state.displayName = null;
             state.photoURL = null;
             state.errorMessage = payload?.errorMessage;
+
+            document.title = `Todo App`;
         },
         checkingCredentials: (state) => {
             state.status = 'checking';

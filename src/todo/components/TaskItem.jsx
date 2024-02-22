@@ -64,6 +64,7 @@ export const TaskItem = ({ item }) => {
 
     return (
         <Card
+            className='animate__animated animate__fadeIn animate__faster'
             sx={{
                 backgroundColor: `labels.${color}`,
                 boxShadow:
